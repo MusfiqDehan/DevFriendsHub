@@ -34,6 +34,20 @@ s3_client = boto3.client(
 )
 
 
+@app.route("/")
+def home():
+    return """
+  <div style="text-align: center; width:100%;">
+    <h1>🚀</h1>
+    <h1>DevFriendsHub</h1>
+    <br>
+    <p>Backend Flask Server</p>
+    <br>
+    <a href="https://devfriendshub.up.railway.app/api/friends">Go to API Endpoint</a>
+  </div>
+  """
+
+
 # Get all friends
 @app.route("/api/friends", methods=["GET"])
 def get_friends():

@@ -4,6 +4,18 @@
 
 A Collection of Developer Friends
 
+<p>
+    <img src="https://img.shields.io/badge/React-18.2.66-blue?style=for-the-badge&logo=react" alt="React">
+    <img src="https://img.shields.io/badge/Flask-3.0.3-blue?style=for-the-badge&logo=flask" alt="Flask">
+    <img src="https://img.shields.io/badge/PostgreSQL-16.0-blue?style=for-the-badge&logo=postgresql" alt="PostgreSQL">
+    <img src="https://img.shields.io/badge/SQLAlchemy-2.0.30-blue?style=for-the-badge&logo=sqlalchemy" alt="SQLAlchemy">
+    <img src="https://img.shields.io/badge/Chakra%20UI-2.8.2-blue?style=for-the-badge&logo=chakra-ui" alt="Chakra UI">
+
+</p>
+
+<p><a href="https://devfriendshub.up.railway.app/api/friends">Live Flask API Server</a></p>
+<p><a href="https://devfriendshub.vercel.app">Live React Frontend</a></p>
+
 </div>
 
 
@@ -31,7 +43,7 @@ A Collection of Developer Friends
 
 -   ✅ CRUD Functionality: Seamlessly create, read, update, and delete friends from your store.
 -   🔒 Best Practices: Utilizes best practices such as creating virtual environments (venv) for a clean and isolated development environment.
--   🌐 Deployment: Deployed on Render for free.
+-   🌐 Deployment: Deployed on Railway.
 -   🎨 Stylish UI Components: Enhanced user experience with stylish UI components provided by Chakra UI.
 -   🌓 Light and Dark Mode: Enjoy a personalized user interface experience with light and dark mode options.
 -   📱 Responsive Design: The app is designed to adapt to various screen sizes, ensuring a consistent experience across devices.

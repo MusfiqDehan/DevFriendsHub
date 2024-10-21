@@ -7,6 +7,7 @@ from flask import request, jsonify, Blueprint
 from .models import Friend
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
+from sqlalchemy import or_
 
 load_dotenv()
 
@@ -205,4 +206,28 @@ def update_friend(id):
         return jsonify(friend.to_json()), 200
     except Exception as e:
         db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@main.route("/api/friends/search", methods=["GET"])
+def search_friend():
+    try:
+        query_param = request.args.get("query")
+
+        # Build the query
+        query = Friend.query
+        if query_param:
+            # Use or_ to search both name and role fields
+            query = query.filter(
+                or_(
+                    Friend.name.ilike(f"%{query_param}%"),
+                    Friend.role.ilike(f"%{query_param}%"),
+                )
+            )
+
+        friends = query.all()
+        result = [friend.to_json() for friend in friends]
+        return jsonify(result), 200
+
+    except Exception as e:
         return jsonify({"error": str(e)}), 500

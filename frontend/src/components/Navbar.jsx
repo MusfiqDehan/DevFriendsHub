@@ -16,13 +16,10 @@ const Navbar = ({ setUsers }) => {
 						gap={3}
 						display={{ base: "none", sm: "flex" }}
 					>
-						{/* <img src='/react.png' alt='React logo' width={50} height={50} />
-						<Text fontSize={"40px"}>+</Text>
-						<img src='/python.png' alt='Python logo' width={50} height={40} />
-						<Text fontSize={"40px"}>=</Text>
 
-						<img src='/explode.png' alt='Explode head' width={45} height={45} /> */}
-						DevFriendsHub
+						<Text fontSize={"2xl"} fontWeight={900}>
+							DevFriendsHub
+						</Text>
 					</Flex>
 					{/* Right side */}
 					<Flex gap={3} alignItems={"center"}>

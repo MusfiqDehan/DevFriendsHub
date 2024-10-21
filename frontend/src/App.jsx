@@ -2,6 +2,7 @@ import { Container, Stack, Text } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import UserGrid from "./components/UserGrid";
 import { useState, useEffect } from "react";
+import SearchUser from "./components/SearchUser";
 
 
 export const BASE_URL = import.meta.env.MODE === "development" ? "http://127.0.0.1:5000/api" : "https://devfriendshub.up.railway.app/api";
@@ -26,6 +27,9 @@ function App() {
 					<Text as={"span"} bgGradient={"linear(to-r, cyan.400, blue.500)"} bgClip={"text"}>
 						Developer Friends
 					</Text>
+
+					{/* Add SearchUser component here */}
+					<SearchUser setUsers={setUsers} />
 
 				</Text>
 

@@ -1,10 +1,14 @@
 import { Avatar, Box, Card, CardBody, CardHeader, Flex, Heading, IconButton, Text, useToast } from "@chakra-ui/react";
 import { BiTrash } from "react-icons/bi";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai"; // Import star icons
+import { useState } from "react"; // Use state to manage bookmark status
 import EditModal from "./EditModal";
 import { BASE_URL } from "../App";
 
 const UserCard = ({ user, setUsers }) => {
 	const toast = useToast();
+	const [isBookmarked, setIsBookmarked] = useState(false); // State to handle bookmark
+
 	const handleDeleteUser = async () => {
 		try {
 			const res = await fetch(BASE_URL + "/friends/" + user.id, {
@@ -32,6 +36,10 @@ const UserCard = ({ user, setUsers }) => {
 				position: "top-center",
 			});
 		}
+	};
+
+	const handleBookmarkToggle = () => {
+		setIsBookmarked(!isBookmarked); // Toggle bookmark state
 	};
 
 	const imageUrl = user.imageUpload ? user.imageUpload : user.imgUrl;
@@ -63,10 +71,23 @@ const UserCard = ({ user, setUsers }) => {
 				</Flex>
 			</CardHeader>
 
-			<CardBody>
+			<CardBody position="relative">
 				<Text>{user.description}</Text>
+
+				{/* Bookmark icons (bottom-right corner) */}
+				<IconButton
+					position="absolute"
+					bottom="10px"
+					right="10px"
+					aria-label="Bookmark"
+					variant="ghost"
+					colorScheme="yellow"
+					icon={isBookmarked ? <AiFillStar size={24} /> : <AiOutlineStar size={24} />}
+					onClick={handleBookmarkToggle}
+				/>
 			</CardBody>
 		</Card>
 	);
 };
+
 export default UserCard;

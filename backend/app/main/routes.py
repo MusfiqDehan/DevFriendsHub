@@ -95,17 +95,15 @@ def create_friend():
         image_upload = None
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file_folder = f"{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/{UPLOAD_FOLDER}"
+            file_path = f"{AWS_LOCATION}/{UPLOAD_FOLDER}/{filename}"
             try:
                 s3_client.upload_fileobj(
                     file,
-                    file_folder,
-                    filename,
+                    AWS_STORAGE_BUCKET_NAME,
+                    file_path,
                     ExtraArgs={"ACL": "public-read"},
                 )
-                image_upload = (
-                    f"https://{AWS_S3_CUSTOM_DOMAIN}/{file_folder}/{filename}"
-                )
+                image_upload = f"https://{AWS_S3_CUSTOM_DOMAIN}/{file_path}"
             except NoCredentialsError:
                 return jsonify({"error": "AWS credentials not available"}), 500
 
@@ -172,17 +170,15 @@ def update_friend(id):
         # Handle image upload
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file_folder = f"{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/{UPLOAD_FOLDER}"
+            file_path = f"{AWS_LOCATION}/{UPLOAD_FOLDER}/{filename}"
             try:
                 s3_client.upload_fileobj(
                     file,
-                    file_folder,
-                    filename,
+                    AWS_STORAGE_BUCKET_NAME,
+                    file_path,
                     ExtraArgs={"ACL": "public-read"},
                 )
-                image_upload = (
-                    f"https://{AWS_S3_CUSTOM_DOMAIN}/{file_folder}/{filename}"
-                )
+                image_upload = f"https://{AWS_S3_CUSTOM_DOMAIN}/{file_path}"
             except NoCredentialsError:
                 return jsonify({"error": "AWS credentials not available"}), 500
 

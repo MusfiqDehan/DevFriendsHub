@@ -4,7 +4,7 @@ import certifi
 from botocore.exceptions import NoCredentialsError
 from app.extensions import db
 from flask import request, jsonify, Blueprint
-from ..models import Friend
+from .models import Friend
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 

@@ -22,6 +22,7 @@ def create_app():
         app.config.from_object(DevelopmentConfig)
 
     CORS(app)
+
     db.init_app(app)
 
     with app.app_context():

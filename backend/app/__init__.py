@@ -8,7 +8,7 @@ from .config import DevelopmentConfig, ProductionConfig
 
 load_dotenv()
 
-db = SQLAlchemy()
+from .extensions import db
 
 
 def create_app():

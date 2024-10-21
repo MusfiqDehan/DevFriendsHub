@@ -2,7 +2,7 @@ import os
 import boto3
 import certifi
 from botocore.exceptions import NoCredentialsError
-from .. import db
+from app.extensions import db
 from flask import request, jsonify, Blueprint
 from ..models import Friend
 from werkzeug.utils import secure_filename

@@ -46,16 +46,21 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def home():
-    return """
-  <div style="text-align: center; width:100%;">
-    <h1>🚀</h1>
-    <h1>DevFriendsHub</h1>
-    <br>
-    <p>Backend Flask Server</p>
-    <br>
-    <a href="https://devfriendshub.up.railway.app/api/friends">Go to API Endpoint</a>
-  </div>
-  """
+    api_url = (
+        os.getenv("API_URL_PROD")
+        if os.getenv("FLASK_ENV") == "production"
+        else os.getenv("API_URL_DEV")
+    )
+    return f"""
+    <div style="text-align: center; width:100%;">
+        <h1>🚀</h1>
+        <h1>DevFriendsHub</h1>
+        <br>
+        <p>Backend Flask Server</p>
+        <br>
+        <a href="{api_url}">Go to API Endpoint</a>
+    </div>
+    """
 
 
 # Get all friends
@@ -167,22 +172,34 @@ def update_friend(id):
         friend.description = data.get("description", friend.description)
         friend.gender = data.get("gender", friend.gender)
 
-        # Handle image upload
+        # Handle image upload and replace old image
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file_path = f"{AWS_LOCATION}/{UPLOAD_FOLDER}/{filename}"
+
+            # Delete old image if it exists
+            if friend.image_upload:
+                old_image_key = friend.image_upload.replace(
+                    f"https://{AWS_S3_CUSTOM_DOMAIN}/", ""
+                )
+                try:
+                    s3_client.delete_object(
+                        Bucket=AWS_STORAGE_BUCKET_NAME, Key=old_image_key
+                    )
+                except NoCredentialsError:
+                    return jsonify({"error": "AWS credentials not available"}), 500
+
             try:
+                # Upload the new image
                 s3_client.upload_fileobj(
                     file,
                     AWS_STORAGE_BUCKET_NAME,
                     file_path,
                     ExtraArgs={"ACL": "public-read"},
                 )
-                image_upload = f"https://{AWS_S3_CUSTOM_DOMAIN}/{file_path}"
+                friend.image_upload = f"https://{AWS_S3_CUSTOM_DOMAIN}/{file_path}"
             except NoCredentialsError:
                 return jsonify({"error": "AWS credentials not available"}), 500
-
-            friend.image_upload = image_upload
 
         db.session.commit()
         return jsonify(friend.to_json()), 200

@@ -1,5 +1,4 @@
 import os
-from app.main.routes import UPLOAD_FOLDER
 from dotenv import load_dotenv
 
 load_dotenv()

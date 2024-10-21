@@ -30,7 +30,8 @@ function EditModal({ setUsers, user }) {
 		gender: user.gender,
 	});
 	const [image, setImage] = useState(null);
-	const [imagePreview, setImagePreview] = useState(user.imageUpload ? `${BASE_URL}/${user.imageUpload}` : null);
+	const [imagePreview, setImagePreview] = useState(user.imageUpload || null);
+
 	const toast = useToast();
 
 	const handleImageChange = (e) => {
@@ -40,6 +41,7 @@ function EditModal({ setUsers, user }) {
 			setImagePreview(URL.createObjectURL(file));
 		}
 	};
+
 
 	const handleEditUser = async (e) => {
 		e.preventDefault();

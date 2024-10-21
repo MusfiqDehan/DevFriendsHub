@@ -115,6 +115,11 @@ pip install -r requirements.txt
 7. Create a `.env` file in the `backend` directory and add the following environment variables:
 
 ```bash
+# Flask settings
+FLASK_APP=run.py
+FLASK_ENV=development
+SECRET_KEY=your_secret_key
+
 # PostgreSQL URL
 DATABASE_URL=
 

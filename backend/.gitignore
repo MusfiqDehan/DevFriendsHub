@@ -1,5 +1,5 @@
 # Virtual environment
-venv/
+.venv/
 venv*/
 .Python
 bin/
@@ -28,3 +28,4 @@ friends.db
 # Dependency directories
 node_modules/
 /dist/
+.venv

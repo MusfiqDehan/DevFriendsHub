@@ -49,7 +49,7 @@ main = Blueprint("main", __name__)
 def home():
     api_url = (
         os.getenv("API_URL_PROD")
-        if os.getenv("FLASK_ENV") == "production"
+        if os.getenv("FLASK_ENV") == "ProductionConfig"
         else os.getenv("API_URL_DEV")
     )
     return f"""

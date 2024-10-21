@@ -7,6 +7,8 @@ colorama==0.4.6
 Flask==3.0.3
 Flask-Cors==4.0.1
 Flask-SQLAlchemy==3.1.1
+flask-jwt-extended
+flask-bcrypt
 greenlet==3.0.3
 gunicorn==22.0.0
 itsdangerous==2.2.0

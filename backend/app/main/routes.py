@@ -2,9 +2,9 @@ import os
 import boto3
 import certifi
 from botocore.exceptions import NoCredentialsError
-from app import app, db
+from .. import db
 from flask import request, jsonify, Blueprint
-from models import Friend
+from ..models import Friend
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 
@@ -31,7 +31,7 @@ s3_client = boto3.client(
 )
 
 
-@app.route("/")
+@main.route("/")
 def home():
     return """
   <div style="text-align: center; width:100%;">
@@ -55,7 +55,6 @@ def get_friends():
 
 UPLOAD_FOLDER = "profile-images"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
 def allowed_file(filename):

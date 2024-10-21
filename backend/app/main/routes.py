@@ -10,8 +10,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-main = Blueprint("main", __name__)
-
 # AWS S3 configuration
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", default=None)
 AWS_LOCATION = os.getenv("AWS_LOCATION", default=None)
@@ -21,6 +19,18 @@ AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", default=None)
 AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL", default=None)
 AWS_S3_FILE_OVERWRITE = os.getenv("AWS_S3_FILE_OVERWRITE", default=None)
 
+# Ensure all required environment variables are set
+if not all(
+    [
+        AWS_STORAGE_BUCKET_NAME,
+        AWS_S3_ACCESS_KEY_ID,
+        AWS_S3_SECRET_ACCESS_KEY,
+        AWS_S3_CUSTOM_DOMAIN,
+        AWS_S3_ENDPOINT_URL,
+    ]
+):
+    raise ValueError("One or more required environment variables are missing.")
+
 
 s3_client = boto3.client(
     "s3",
@@ -29,6 +39,9 @@ s3_client = boto3.client(
     endpoint_url=AWS_S3_ENDPOINT_URL,
     verify=certifi.where(),
 )
+
+
+main = Blueprint("main", __name__)
 
 
 @main.route("/")

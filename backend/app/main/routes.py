@@ -3,12 +3,14 @@ import boto3
 import certifi
 from botocore.exceptions import NoCredentialsError
 from app import app, db
-from flask import request, jsonify
+from flask import request, jsonify, Blueprint
 from models import Friend
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 
 load_dotenv()
+
+main = Blueprint("main", __name__)
 
 # AWS S3 configuration
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", default=None)
@@ -19,11 +21,6 @@ AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", default=None)
 AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL", default=None)
 AWS_S3_FILE_OVERWRITE = os.getenv("AWS_S3_FILE_OVERWRITE", default=None)
 
-# s3_client = boto3.client(
-#     "s3",
-#     aws_access_key_id=AWS_S3_ACCESS_KEY_ID,
-#     aws_secret_access_key=AWS_S3_SECRET_ACCESS_KEY,
-# )
 
 s3_client = boto3.client(
     "s3",
@@ -49,7 +46,7 @@ def home():
 
 
 # Get all friends
-@app.route("/api/friends", methods=["GET"])
+@main.route("/api/friends", methods=["GET"])
 def get_friends():
     friends = Friend.query.all()
     result = [friend.to_json() for friend in friends]
@@ -65,7 +62,7 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route("/api/friends", methods=["POST"])
+@main.route("/api/friends", methods=["POST"])
 def create_friend():
     try:
         data = request.form.to_dict()
@@ -87,14 +84,12 @@ def create_friend():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             try:
-                s3_key = f"{UPLOAD_FOLDER}/{filename}"
                 s3_client.upload_fileobj(
                     file,
                     AWS_STORAGE_BUCKET_NAME,
-                    s3_key,
                     ExtraArgs={"ACL": "public-read"},
                 )
-                image_upload = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/{s3_key}"
+                image_upload = f"https://{AWS_S3_CUSTOM_DOMAIN}/{filename}"
             except NoCredentialsError:
                 return jsonify({"error": "AWS credentials not available"}), 500
 
@@ -126,7 +121,7 @@ def create_friend():
 
 
 # Delete a friend
-@app.route("/api/friends/<int:id>", methods=["DELETE"])
+@main.route("/api/friends/<int:id>", methods=["DELETE"])
 def delete_friend(id):
     try:
         friend = Friend.query.get(id)
@@ -142,7 +137,7 @@ def delete_friend(id):
 
 
 # Update a friend profile
-@app.route("/api/friends/<int:id>", methods=["PATCH"])
+@main.route("/api/friends/<int:id>", methods=["PATCH"])
 def update_friend(id):
     try:
         friend = Friend.query.get(id)
@@ -162,17 +157,16 @@ def update_friend(id):
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             try:
-                s3_key = f"{UPLOAD_FOLDER}/{filename}"
                 s3_client.upload_fileobj(
-                    Bucket=AWS_STORAGE_BUCKET_NAME,
-                    Key=s3_key,
+                    file,
+                    AWS_STORAGE_BUCKET_NAME,
+                    ExtraArgs={"ACL": "public-read"},
                 )
-
-                friend.image_upload = (
-                    f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/{s3_key}"
-                )
+                image_upload = f"https://{AWS_S3_CUSTOM_DOMAIN}/{filename}"
             except NoCredentialsError:
                 return jsonify({"error": "AWS credentials not available"}), 500
+
+            friend.image_upload = image_upload
 
         db.session.commit()
         return jsonify(friend.to_json()), 200

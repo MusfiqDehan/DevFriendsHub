@@ -8,7 +8,7 @@ class Friend(db.Model):
     description = db.Column(db.Text, nullable=False)
     gender = db.Column(db.String(10), nullable=False)
     img_url = db.Column(db.String(200), nullable=True)
-    image_upload = db.Column(db.String(200), nullable=True)  # New field
+    image_upload = db.Column(db.String(200), nullable=True)
 
     def to_json(self):
         return {
@@ -18,5 +18,5 @@ class Friend(db.Model):
             "description": self.description,
             "gender": self.gender,
             "imgUrl": self.img_url,
-            "imageUpload": self.image_upload,  # Include new field
+            "imageUpload": self.image_upload,
         }

@@ -1,5 +1,5 @@
 import os
-import logging
+# import logging
 
 from flask import Flask
 from flask_cors import CORS
@@ -38,6 +38,6 @@ def create_app(config_class=None):
     app.register_blueprint(main_bp)
     # app.register_blueprint(auth_bp)
 
-    logging.warning(f"Using database: {app.config['SQLALCHEMY_DATABASE_URI']}")
+    # logging.warning(f"Using database: {app.config['SQLALCHEMY_DATABASE_URI']}")
 
     return app

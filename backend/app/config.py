@@ -10,24 +10,24 @@ class Config:
 
 
 class DevelopmentConfig(Config):
-    def __init__(self):
-        print("Using development config")
+    # def __init__(self):
+    #     print("Using development config")
 
     SQLALCHEMY_DATABASE_URI = os.getenv("DEV_DATABASE_URL", default=None)
     DEBUG = True
 
 
 class ProductionConfig(Config):
-    def __init__(self):
-        print("Using production config")
+    # def __init__(self):
+    #     print("Using production config")
 
     SQLALCHEMY_DATABASE_URI = os.getenv("PROD_DATABASE_URL", default=None)
     DEBUG = False
 
 
 class TestingConfig(Config):
-    def __init__(self):
-        print("Using testing config")
+    # def __init__(self):
+    #     print("Using testing config")
 
     SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL", default=None)
     TESTING = True

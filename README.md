@@ -10,11 +10,20 @@ A Collection of Developer Friends
     <img src="https://img.shields.io/badge/PostgreSQL-16.0-blue?style=for-the-badge&logo=postgresql" alt="PostgreSQL">
     <img src="https://img.shields.io/badge/SQLAlchemy-2.0.30-blue?style=for-the-badge&logo=sqlalchemy" alt="SQLAlchemy">
     <img src="https://img.shields.io/badge/Chakra%20UI-2.8.2-blue?style=for-the-badge&logo=chakra-ui" alt="Chakra UI">
+    <img src="https://img.shields.io/badge/Docker-25.0.2-blue?style=for-the-badge&logo=docker" alt="Docker">
 
 </p>
 
-<p><a href="https://devfriendshub.up.railway.app/api/friends">Live Flask API Server</a></p>
-<p><a href="https://devfriendshub.vercel.app">Live React Frontend</a></p>
+<p>
+<a href="https://devfriendshub.up.railway.app/api/friends">Live Flask API Server</a>
+-
+<a href="https://hub.docker.com/r/musfiqdehan/devfriendshub-backend">Docker Image</a>
+</p>
+<p>
+<a href="https://devfriendshub.vercel.app">Live React Frontend</a>
+-
+<a href="https://hub.docker.com/r/musfiqdehan/devfriendshub-frontend">Docker Image</a>
+</p>
 
 </div>
 
@@ -23,8 +32,12 @@ A Collection of Developer Friends
 ## Table of Contents
 
 - [Technology Used](#technology-used)
+- [Folder Structure](#folder-structure)
 - [Features](#features)
 - [Run the App Locally](#run-the-app-locally)
+    - [Run Using Docker](#run-using-docker)
+    - [Run Backend API Server](#run-backend-api-server)
+    - [Run the Frontend Server](#run-the-frontend-server)
 
 
 ## Technology Used
@@ -37,6 +50,65 @@ A Collection of Developer Friends
     -   **Flask**: A lightweight WSGI web application framework.
     -   **PostgreSQL**: A powerful, open-source object-relational database system.
     -   **SQLAlchemy**: A SQL toolkit and Object-Relational Mapping (ORM) library for Python.
+-   **Containerization**:
+    -   **Docker**: A platform for developing, shipping, and running applications in containers.
+-   **Deployment**:
+    -   **Railway**: A platform that allows you to deploy your apps and databases in the cloud.
+    -   **Vercel**: A platform for static sites and Serverless Functions.
+
+
+## Folder Structure
+
+The project is divided into two main directories: `backend` and `frontend`.
+
+```bash
+.
+├── backend
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── auth
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py
+│   │   │   └── routes.py
+│   │   ├── config.py
+│   │   ├── extensions.py
+│   │   └── main
+│   │       ├── __init__.py
+│   │       ├── models.py
+│   │       └── routes.py
+│   ├── Dockerfile.backend
+│   ├── migrations
+│   ├── requirements.txt
+│   ├── run.py
+│   └── tests
+│       ├── conftest.py
+│       ├── __init__.py
+│       ├── test_auth.py
+│       └── test_main.py
+├── frontend
+│   ├── Dockerfile.frontend
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public
+│   │   └── vite.svg
+│   ├── README.md
+│   ├── src
+│   │   ├── App.jsx
+│   │   ├── components
+│   │   │   ├── CreateUserModal.jsx
+│   │   │   ├── EditModal.jsx
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── SearchUser.jsx
+│   │   │   ├── UserCard.jsx
+│   │   │   └── UserGrid.jsx
+│   │   └── main.jsx
+│   └── vite.config.js
+├── LICENSE
+├── docker-compose.yml
+├── push_to_dockerhub.sh
+└── README.md
+```
 
 
 ## Features
@@ -49,6 +121,20 @@ A Collection of Developer Friends
 -   📱 Responsive Design: The app is designed to adapt to various screen sizes, ensuring a consistent experience across devices.
 
 ## Run the App Locally
+
+### Run Using Docker
+
+```bash
+# Pull the images
+docker pull musfiqdehan/devfriendshub-backend:latest
+docker pull musfiqdehan/devfriendshub-frontend:latest
+
+# Run the backend container
+docker run -d -p 5050:5050 musfiqdehan/devfriendshub-backend:latest
+
+# Run the frontend container
+docker run -d -p 3000:80 musfiqdehan/devfriendshub-frontend:latest
+```
 
 ### Run Backend API Server
 

@@ -20,8 +20,6 @@ pip-selfcheck.json
 instance/
 __pycache__/
 
-# Database
-friends.db
 
 # Compiled Python files
 *.pyc

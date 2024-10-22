@@ -1,0 +1,61 @@
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Virtual environment
+.venv/
+venv*/
+.Python
+bin/
+include/
+lib/
+lib64/
+pip-selfcheck.json
+.pytest_cache
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.pyc
+
+# Environment variables
+.env
+instance/
+__pycache__/
+
+
+# Compiled Python files
+*.pyc
+
+# Dependency directories
+node_modules/
+/dist/
+.venv
+
+
+# React
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
